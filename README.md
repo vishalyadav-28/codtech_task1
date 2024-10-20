@@ -1,63 +1,37 @@
-create database labrary_books_inventory;
- use labrary_books_inventory;
- -- Create Books Table
-CREATE TABLE Books (
-                     BookID INT PRIMARY KEY AUTO_INCREMENT,
-					 Title VARCHAR(255) NOT NULL,
-                     Author VARCHAR(255),
-                     Quantity INT
-				   );
-                   
- INSERT INTO Books (Title, Author, Quantity)
-VALUES ('The Alchemist', 'Paulo Coelho', 5),('animal','ranjan shah',5);
-                  
-UPDATE Books
-SET Quantity = Quantity - 1 WHERE bookid=1;
 
-delete from books where bookid = 2;
+"Library Inventory Management System"
 
-select * from books;
+Developer Information
+Name: Vishal Kumar Yadav
+Company: Codtech IT Solutions
+ID: CT08DS9216
+Domain: SQL
+Duration: October to November 2024
+mentor: Santosh Neela
 
+Overview
 
--- Create Members Table
-CREATE TABLE Members (
-                       MemberID INT PRIMARY KEY AUTO_INCREMENT,
-					   FirstName VARCHAR(100),
-                       LastName VARCHAR(100),
-                       Email VARCHAR(255) UNIQUE,
-                       PhoneNumber VARCHAR(15),
-                       MembershipDate DATE
-                     );
-			
-INSERT INTO Members (FirstName, LastName, Email, PhoneNumber, MembershipDate)
-VALUES ('John', 'cena', 'john.cena@gmail.com', '1234567890', '2024-10-20'),('jone','jones','jbones@gmail.com','2345678901','2024-10-20');
+The "Library Inventory Management System" is designed to manage a library's inventory, track its members, and handle borrow/return transactions efficiently. This project provides a streamlined way to keep track of the books available in the library, the members registered, and all the book transactions happening in the library.
 
-UPDATE Members
-SET Email = 'jonh.cena2@gmail.com'
-WHERE MemberID = 1;
+Description
 
-delete from members where memberid = 2;
+This system allows library administrators to:
+Manage Books: Keep track of book details, including the title, author, genre, and quantity available.
+Manage Members: Store member information such as name, email, phone number, and membership date.
+Track Transactions: Record every transaction involving borrowing or returning of books by the library members.
 
-select * from members;
+Features
 
--- Create Transactions Table
-CREATE TABLE Transactions (
-                            TransactionID INT PRIMARY KEY AUTO_INCREMENT,
-                            BookID INT,
-						    MemberID INT,
-                            TransactionType ENUM('Borrow', 'Return'),
-                            TransactionDate DATE,
-                            FOREIGN KEY (BookID) REFERENCES Books(BookID),
-                            FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
-					);
+Book Management: Add, update, delete, and retrieve book details.
+Member Management: Register new members, update member information, and view member lists.
+Transaction Tracking: Log transactions for borrowing and returning books, and easily retrieve transaction histories.
+Data Consistency: Uses foreign key constraints to maintain data consistency across tables.
+Error Handling: Ensures that no invalid transactions can occur through data validation.
 
-INSERT INTO Transactions (BookID, MemberID, TransactionType, TransactionDate)
-VALUES (1, 1, 'Borrow', '2024-10-20');
+Usage
 
--- To retrieve all borrowed/returned books
+To Add Books: Use the `INSERT` query to add new books to the inventory.
+To Add Members: Use the `INSERT` query to register new members.
+To Borrow or Return Books: Use the `Transactions` table to log borrow and return operations.
+Data Retrieval: Use `SELECT` queries to view lists of books, members, and transaction details.
 
-SELECT Books.Title, Members.FirstName, Members.LastName, Transactions.TransactionDate
-FROM Transactions
-INNER JOIN Books ON Transactions.BookID = Books.BookID
-INNER JOIN Members ON Transactions.MemberID = Members.MemberID
-WHERE Transactions.TransactionType = 'Borrow';
